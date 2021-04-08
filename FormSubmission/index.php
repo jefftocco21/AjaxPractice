@@ -27,7 +27,6 @@
         Height: <input type="text" name="height" /><br />
         <br />
         <input id="html-submit" type="submit" value="Submit" />
-        <input id="ajax-submit" type="button" value="Ajax Submit" />
       </form>
     </div>
 
@@ -43,27 +42,27 @@
 
       var result_div = document.getElementById("result");
       var volume = document.getElementById("volume");
-      var button = document.getElementById("ajax-submit");
-      var orig_val = button.value;
+      var button = document.getElementById("html-submit");
+      var orig_button_value = button.value;
 
       function showSpinner() {
         var spinner = document.getElementById("spinner");
         spinner.style.display = 'block';
       }
 
-      function disable_submit(){
-        button.disabled = true;
- 
-      }
-
-      function enable_submit(){
-        button.disabled = false;
-        button.value = orig_val; 
-      }
-
       function hideSpinner() {
         var spinner = document.getElementById("spinner");
         spinner.style.display = 'none';
+      }
+
+      function disableSubmitButton() {
+        button.disabled = true;
+        button.value = 'Loading...';
+      }
+
+      function enableSubmitButton() {
+        button.disabled = false;
+        button.value = orig_button_value;
       }
 
       function displayErrors(errors) {
@@ -108,7 +107,7 @@
         clearResult();
         clearErrors();
         showSpinner();
-        disable_submit();
+        disableSubmitButton();
 
         var form = document.getElementById("measurement-form");
         var action = form.getAttribute("action");
@@ -130,7 +129,8 @@
             console.log('Result: ' + result);
 
             hideSpinner();
-            enable_submit();
+            enableSubmitButton();
+
             var json = JSON.parse(result);
             if(json.hasOwnProperty('errors') && json.errors.length > 0) {
               displayErrors(json.errors);
@@ -142,7 +142,10 @@
         xhr.send(form_data);
       }
 
-      button.addEventListener("click", calculateMeasurements);
+      button.addEventListener("click", function(event) {
+        event.preventDefault();
+        calculateMeasurements();
+      });
 
     </script>
 
