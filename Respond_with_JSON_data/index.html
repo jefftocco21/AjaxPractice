@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Ajax Text</title>
+  </head>
+  <body>
+
+    <div id="main">
+      This is the original text when the page first loads.
+    </div>
+
+    <button id="ajax-button" type="button">Update content with Ajax</button>
+
+    <script>
+      function replaceText() {
+        var target = document.getElementById("main"); //target variable equal to element of id with main
+        var xhr = new XMLHttpRequest(); 
+        xhr.open('GET', 'new_content.php', true); //GET request, destination file, true for async
+        xhr.onreadystatechange = function () { //anytime ready state changes
+          console.log('readyState: ' + xhr.readyState);
+          if(xhr.readyState == 2) {
+            target.innerHTML = 'Loading...';
+          }
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            var json = JSON.parse(xhr.responseText); //need to parse the raw, dumped text as JSON 
+            target.innerHTML = json.regular;
+            target.innerHTML = json.long;
+          }
+        }
+        xhr.send(); //sends request to server
+      }
+
+      var button = document.getElementById ("ajax-button"); //button var binds to whatever element has the id of "ajax-button"
+      button.addEventListener("click", replaceText); //event to call replaceText when button is clicked 
+    </script>
+
+  </body>
+</html>
