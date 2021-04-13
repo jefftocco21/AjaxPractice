@@ -25,6 +25,10 @@
           </form>
 
           <ul id="suggestions">
+            <li><a href="search.php?q=a">a</a></li>
+            <li><a href="search.php?q=b">b</a></li>
+            <li><a href="search.php?q=c">c</a></li>
+            <li><a href="search.php?q=d">d</a></li>
           </ul>
 
         </div>
