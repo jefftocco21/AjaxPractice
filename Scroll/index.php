@@ -27,7 +27,7 @@
     </div>
 
     <div id="load-more-container">
-      <button id="load-more">Load more</button>
+      <button id="load-more" data-page="0">Load more</button>
     </div>
 
     <script>
@@ -53,13 +53,37 @@
         load_more.style.display = 'none';
       }
 
+      function appendToDiv(div, new_html){
+        //put new html into temp div, causes browser to parase it as elements
+        var temp = document.createElement('div');
+        temp.innerHTML = new_html;
+
+        //find and work with elelemnts
+        //firstElementChild because of how DOM treats whitespace
+        var class_name = temp.firstElementChild.className;
+        var items = temp.getElementsByClassName(class_name);
+
+        var len = items.length
+        for(i=0; i < len; i++){
+          div.appendChild(items[0]);
+        }
+      }
+
+      function setCurrentPage(page){
+        console.log('Incrementing page to: ' + page);
+        load_more.setAttribute('data-page', page);
+      }
+
       function loadMore() {
 
         showSpinner();
         hideLoadMore();
 
+        var page = parseInt(load_more.getAttribute('data-page'));
+        var next_page = page + 1;
+
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'blog.php?page=1', true);
+        xhr.open('GET', 'blog.php?page=' + next_page, true);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.onreadystatechange = function () {
           if(xhr.readyState == 4 && xhr.status == 200) {
@@ -67,7 +91,9 @@
             console.log('Result: ' + result);
 
             hideSpinner();
+            setCurrentPage(next_page);
             // append results to end of blog posts
+            appendToDiv(container, result);
             showLoadMore();
 
           }
