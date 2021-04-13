@@ -71,14 +71,14 @@
       }
 
       function setCurrentPage(page){
-        console.log('Incrementing page to: ' + page);
+        //console.log('Incrementing page to: ' + page);
         load_more.setAttribute('data-page', page);
       }
 
       function scrollReaction(){
         var content_height = container.offsetHeight;
         var current_y = window.innerHeight + window.pageYOffset;
-        console.log(current_y + '/' + content_height);
+        //console.log(current_y + '/' + content_height);
         if(current_y >= content_height){
           loadMore();
         }
