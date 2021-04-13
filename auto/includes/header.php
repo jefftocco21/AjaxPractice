@@ -25,10 +25,10 @@
           </form>
 
           <ul id="suggestions">
-            <li><a href="search.php?q=a">a</a></li>
-            <li><a href="search.php?q=b">b</a></li>
-            <li><a href="search.php?q=c">c</a></li>
-            <li><a href="search.php?q=d">d</a></li>
+            <li><a href="search.php?q=alpha">alpha</a></li>
+            <li><a href="search.php?q=beta">beta</a></li>
+            <li><a href="search.php?q=gamma">gamma</a></li>
+            <li><a href="search.php?q=delta">delta</a></li>
           </ul>
 
         </div>
